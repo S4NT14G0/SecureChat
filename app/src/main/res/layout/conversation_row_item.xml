@@ -10,14 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="18sp"
+        android:textSize="32sp"
         android:textStyle="bold"
         android:text="192.168.10.159:2222"/>
     <TextView
         android:id="@+id/newest_message_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
+        android:textSize="18sp"
         android:text="Good to see you peer number 32!"
         android:textColor="@color/colorPrimary"/>
 

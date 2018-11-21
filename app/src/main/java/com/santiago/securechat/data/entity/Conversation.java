@@ -1,14 +1,21 @@
-package com.santiago.securechat.data;
+package com.santiago.securechat.data.entity;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
+@Entity
 public class Conversation {
 
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
     private int id;
+
     private long timestampOldestMessage, timestampNewestMessage;
     private String peerIp;
     private int peerPort;
 
-    public Conversation(int id, String peerIp, int peerPort) {
-        this.id = id;
+    public Conversation(String peerIp, int peerPort) {
         this.peerIp = peerIp;
         this.peerPort = peerPort;
     }
