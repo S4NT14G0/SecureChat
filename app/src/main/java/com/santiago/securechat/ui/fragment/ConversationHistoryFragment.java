@@ -1,6 +1,5 @@
 package com.santiago.securechat.ui.fragment;
 
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,7 +33,7 @@ public class ConversationHistoryFragment extends Fragment implements IFabClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_conversation_history, container, false);
         initConversationHistoryRecycler(view);
         mainActivity = (MainActivity) getActivity();
         mainActivity.setIFabClickListener(this);
