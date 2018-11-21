@@ -67,7 +67,6 @@ public class ConversationHistoryFragment extends Fragment implements IFabClickLi
         conversationHistoryAdapter = new ConversationHistoryAdapter(fauxConversations, this);
         conversationHistoryRecyclerView = view.findViewById(R.id.conversation_list_recycler_view);
         conversationHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //conversationHistoryAdapter.setOnClickListener(this)
         conversationHistoryRecyclerView.setAdapter(conversationHistoryAdapter);
 
     }
