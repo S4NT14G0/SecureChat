@@ -1,5 +1,6 @@
 package com.santiago.securechat.ui;
 
+import android.app.FragmentTransaction;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.santiago.securechat.R;
+import com.santiago.securechat.ui.fragment.ConversationHistoryFragment;
 import com.santiago.securechat.ui.listener.IFabClickListener;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
                 iFabClickListener.onFabClick();
             }
         });
+
+        ConversationHistoryFragment conversationHistoryFragment = new ConversationHistoryFragment();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container, conversationHistoryFragment);
+        fragmentTransaction.commit();
     }
 
     public void setIFabClickListener(IFabClickListener iFabClickListener) {

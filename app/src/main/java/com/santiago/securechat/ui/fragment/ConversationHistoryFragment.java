@@ -1,6 +1,7 @@
 package com.santiago.securechat.ui.fragment;
 
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -78,6 +79,10 @@ public class ConversationHistoryFragment extends Fragment implements IFabClickLi
     @Override
     public void onConversationRowClicked(int conversationId) {
         Toast.makeText(getActivity(), "Conversation Clicked", Toast.LENGTH_LONG).show();
+        ConversationFragment conversationFragment = new ConversationFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, conversationFragment, "conversation");
+        transaction.commit();
     }
 
     /**
