@@ -14,8 +14,8 @@ import java.util.List;
 
 public class ConversationHistoryAdapter extends RecyclerView.Adapter<ConversationHistoryAdapter.ViewHolder> {
 
-    List<Conversation> conversationHistory;
-    IConversationRowClickListener iConversationRowClickListener;
+    private final List<Conversation> conversationHistory;
+    private final IConversationRowClickListener iConversationRowClickListener;
 
     public ConversationHistoryAdapter (List<Conversation> conversationHistory, IConversationRowClickListener iConversationRowClickListener) {
         this.conversationHistory = conversationHistory;
@@ -43,9 +43,10 @@ public class ConversationHistoryAdapter extends RecyclerView.Adapter<Conversatio
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView tvPeerAddress, tvNewestMessage;
+        final TextView tvPeerAddress;
+        final TextView tvNewestMessage;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             tvPeerAddress = itemView.findViewById(R.id.peer_address_text_view);
             tvNewestMessage = itemView.findViewById(R.id.newest_message_text_view);

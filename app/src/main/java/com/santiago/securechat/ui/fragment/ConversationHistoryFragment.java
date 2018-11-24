@@ -37,6 +37,7 @@ public class ConversationHistoryFragment extends Fragment implements IFabClickLi
         View view = inflater.inflate(R.layout.fragment_conversation_history, container, false);
         initConversationHistoryRecycler(view);
         mainActivity = (MainActivity) getActivity();
+        mainActivity.setFabVisibility(true);
         mainActivity.setIFabClickListener(this);
 
         return view;
@@ -54,15 +55,9 @@ public class ConversationHistoryFragment extends Fragment implements IFabClickLi
     private void initConversationHistoryRecycler (View view) {
         // TODO: REMOVE ONCE DATA IS LIVE
         ArrayList<Conversation> fauxConversations = new ArrayList<>();
-        fauxConversations.add(new Conversation("192.168.10.12", 2222));
-        fauxConversations.add(new Conversation("192.168.10.12", 2222));
-        fauxConversations.add(new Conversation("192.168.10.12", 2222));
-        fauxConversations.add(new Conversation("192.168.10.12", 2222));
-        fauxConversations.add(new Conversation("192.168.10.12", 2222));
-        fauxConversations.add(new Conversation("192.168.10.12", 2222));
-        fauxConversations.add(new Conversation("192.168.10.12", 2222));
-        fauxConversations.add(new Conversation("192.168.10.12", 2222));
-        fauxConversations.add(new Conversation("192.168.10.12", 2222));
+        fauxConversations.add(new Conversation("192.168.10.235", 5050));
+        fauxConversations.add(new Conversation("192.168.10.11", 2222));
+
 
         conversationHistoryAdapter = new ConversationHistoryAdapter(fauxConversations, this);
         conversationHistoryRecyclerView = view.findViewById(R.id.conversation_list_recycler_view);
@@ -78,10 +73,10 @@ public class ConversationHistoryFragment extends Fragment implements IFabClickLi
      */
     @Override
     public void onConversationRowClicked(int conversationId) {
-        Toast.makeText(getActivity(), "Conversation Clicked", Toast.LENGTH_LONG).show();
         ConversationFragment conversationFragment = new ConversationFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.container, conversationFragment, "conversation");
+        transaction.addToBackStack("");
         transaction.commit();
     }
 

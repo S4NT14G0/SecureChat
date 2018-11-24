@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.santiago.securechat.R;
 import com.santiago.securechat.data.entity.Message;
+import com.santiago.securechat.ui.MainActivity;
 import com.santiago.securechat.ui.adapter.ConversationAdapter;
 
 import java.util.ArrayList;
@@ -19,12 +20,14 @@ public class ConversationFragment extends Fragment {
 
     RecyclerView conversationRecyclerView;
     ConversationAdapter conversationAdapter;
+    MainActivity mainActivity;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_conversation, container, false);
-
+        mainActivity = (MainActivity) getActivity();
+        mainActivity.setFabVisibility(false);
         initConversationRecycler(view);
 
         return view;
