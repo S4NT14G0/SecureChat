@@ -1,13 +1,18 @@
 package com.santiago.securechat.data.entity;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity
+import com.google.gson.annotations.SerializedName;
+
+@Entity(indices = {@Index("id")})
 public class Peer {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     @NonNull
     private int id;
     private String ipAddress;

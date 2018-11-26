@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.santiago.securechat.R;
-import com.santiago.securechat.data.entity.Conversation;
 import com.santiago.securechat.data.entity.Peer;
 import com.santiago.securechat.ui.MainActivity;
 import com.santiago.securechat.ui.adapter.ConversationHistoryAdapter;
@@ -55,9 +54,9 @@ public class ConversationHistoryFragment extends Fragment implements IFabClickLi
      */
     private void initConversationHistoryRecycler (View view) {
         // TODO: REMOVE ONCE DATA IS LIVE
-        ArrayList<Conversation> fauxConversations = new ArrayList<>();
-        fauxConversations.add(new Conversation(new Peer("192.168.10.235", 5050)));
-        fauxConversations.add(new Conversation(new Peer("192.168.10.11", 2222)));
+        ArrayList<Peer> fauxConversations = new ArrayList<>();
+        fauxConversations.add(new Peer("192.168.10.235", 5050));
+        fauxConversations.add(new Peer("192.168.10.11", 2222));
 
 
         conversationHistoryAdapter = new ConversationHistoryAdapter(fauxConversations, this);

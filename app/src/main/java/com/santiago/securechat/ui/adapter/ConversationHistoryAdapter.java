@@ -7,17 +7,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.santiago.securechat.R;
-import com.santiago.securechat.data.entity.Conversation;
+import com.santiago.securechat.data.entity.Peer;
 import com.santiago.securechat.ui.listener.IConversationRowClickListener;
 
 import java.util.List;
 
 public class ConversationHistoryAdapter extends RecyclerView.Adapter<ConversationHistoryAdapter.ViewHolder> {
 
-    private final List<Conversation> conversationHistory;
+    private final List<Peer> conversationHistory;
     private final IConversationRowClickListener iConversationRowClickListener;
 
-    public ConversationHistoryAdapter (List<Conversation> conversationHistory, IConversationRowClickListener iConversationRowClickListener) {
+    public ConversationHistoryAdapter (List<Peer> conversationHistory, IConversationRowClickListener iConversationRowClickListener) {
         this.conversationHistory = conversationHistory;
         this.iConversationRowClickListener = iConversationRowClickListener;
     }
@@ -30,7 +30,7 @@ public class ConversationHistoryAdapter extends RecyclerView.Adapter<Conversatio
 
     @Override
     public void onBindViewHolder(ConversationHistoryAdapter.ViewHolder holder, int position) {
-        String peerAddress = conversationHistory.get(position).getPeer().getIpAddress() + ":" + conversationHistory.get(position).getPeer().getPort();
+        String peerAddress = conversationHistory.get(position).getIpAddress() + ":" + conversationHistory.get(position).getPort();
         holder.tvPeerAddress.setText(peerAddress);
 
         // TODO: Figure out how to structure conversation so we can get messages from it.

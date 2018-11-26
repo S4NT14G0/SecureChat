@@ -1,12 +1,10 @@
 package com.santiago.securechat.di.module;
 
-import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.santiago.securechat.SecureChatApplication;
 import com.santiago.securechat.data.Database;
-import com.santiago.securechat.data.dao.ConversationDao;
 
 import javax.inject.Singleton;
 
@@ -28,10 +26,5 @@ public class SecureChatApplicationModule {
                 Database.class,
                 Database.DATABASE_NAME)
                 .build();
-    }
-
-    @Provides
-    ConversationDao provideConversationDao (Database database) {
-        return database.conversationDao();
     }
 }
