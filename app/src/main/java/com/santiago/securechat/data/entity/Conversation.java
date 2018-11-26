@@ -11,13 +11,10 @@ public class Conversation {
     @NonNull
     private int id;
 
-    private long timestampOldestMessage, timestampNewestMessage;
-    private String peerIp;
-    private int peerPort;
+    Peer peer;
 
-    public Conversation(String peerIp, int peerPort) {
-        this.peerIp = peerIp;
-        this.peerPort = peerPort;
+    public Conversation(Peer peer) {
+        this.peer = peer;
     }
 
     public int getId() {
@@ -28,35 +25,15 @@ public class Conversation {
         this.id = id;
     }
 
-    public long getTimestampOldestMessage() {
-        return timestampOldestMessage;
+    public int getPeerId() {
+        return peer.getId();
     }
 
-    public void setTimestampOldestMessage(long timestampOldestMessage) {
-        this.timestampOldestMessage = timestampOldestMessage;
+    public Peer getPeer() {
+        return peer;
     }
 
-    public long getTimestampNewestMessage() {
-        return timestampNewestMessage;
-    }
-
-    public void setTimestampNewestMessage(long timestampNewestMessage) {
-        this.timestampNewestMessage = timestampNewestMessage;
-    }
-
-    public String getPeerIp() {
-        return peerIp;
-    }
-
-    public void setPeerIp(String peerIp) {
-        this.peerIp = peerIp;
-    }
-
-    public int getPeerPort() {
-        return peerPort;
-    }
-
-    public void setPeerPort(int peerPort) {
-        this.peerPort = peerPort;
+    public void setPeer(Peer peer) {
+        this.peer = peer;
     }
 }

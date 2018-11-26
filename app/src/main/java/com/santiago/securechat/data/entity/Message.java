@@ -26,6 +26,10 @@ public class Message {
     }
 
     // Setters
+
+    public void setId(@NonNull int id) {
+        this.id = id;
+    }
     public void setPeerId(int peerId) {
         this.peerId = peerId;
     }

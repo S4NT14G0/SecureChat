@@ -30,7 +30,7 @@ public class ConversationHistoryAdapter extends RecyclerView.Adapter<Conversatio
 
     @Override
     public void onBindViewHolder(ConversationHistoryAdapter.ViewHolder holder, int position) {
-        String peerAddress = conversationHistory.get(position).getPeerIp() + ":" + conversationHistory.get(position).getPeerPort();
+        String peerAddress = conversationHistory.get(position).getPeer().getIpAddress() + ":" + conversationHistory.get(position).getPeer().getPort();
         holder.tvPeerAddress.setText(peerAddress);
 
         // TODO: Figure out how to structure conversation so we can get messages from it.
