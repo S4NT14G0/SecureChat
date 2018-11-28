@@ -1,6 +1,9 @@
 package com.santiago.securechat.data;
 
 import android.arch.persistence.room.RoomDatabase;
+
+import com.santiago.securechat.data.dao.MessageDao;
+import com.santiago.securechat.data.dao.PeerDao;
 import com.santiago.securechat.data.entity.Message;
 import com.santiago.securechat.data.entity.Peer;
 
@@ -9,5 +12,9 @@ public abstract class Database extends RoomDatabase {
     public static final String DATABASE_NAME = "Database.db";
 
     private static volatile Database instance;
+
+    public abstract PeerDao peerDao();
+
+    public abstract MessageDao messageDao();
 
 }
