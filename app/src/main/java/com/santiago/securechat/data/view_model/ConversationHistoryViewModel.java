@@ -20,7 +20,7 @@ public class ConversationHistoryViewModel extends ViewModel {
     public ConversationHistoryViewModel(final ConversationRepository conversationRepository) {
         this.conversationRepository = conversationRepository;
 
-        // TODO: peers = conversationRepository.getPeers();
+        peers = conversationRepository.getPeers();
     }
 
     public LiveData<List<Peer>> getPeers() {

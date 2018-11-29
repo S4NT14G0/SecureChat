@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.santiago.securechat.R;
 import com.santiago.securechat.data.entity.Message;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.Gravity.END;
@@ -17,10 +18,10 @@ import static android.view.Gravity.START;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapter.ViewHolder> {
 
-    private final List<Message> messageList;
+    private List<Message> messageList;
 
-    public ConversationAdapter (List<Message> messageList) {
-        this.messageList = messageList;
+    public ConversationAdapter () {
+        this.messageList = new ArrayList<>();
     }
 
     @Override
@@ -41,6 +42,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             holder.viewMessage.setGravity(END);
         }
 
+    }
+
+    public void setMessages (List<Message> newData) {
+        this.messageList = newData;
+        notifyDataSetChanged();
     }
 
     /**

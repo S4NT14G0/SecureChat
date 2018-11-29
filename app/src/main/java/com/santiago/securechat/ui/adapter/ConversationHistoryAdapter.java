@@ -10,15 +10,16 @@ import com.santiago.securechat.R;
 import com.santiago.securechat.data.entity.Peer;
 import com.santiago.securechat.ui.listener.IConversationRowClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConversationHistoryAdapter extends RecyclerView.Adapter<ConversationHistoryAdapter.ViewHolder> {
 
-    private final List<Peer> conversationHistory;
+    private List<Peer> conversationHistory;
     private final IConversationRowClickListener iConversationRowClickListener;
 
-    public ConversationHistoryAdapter (List<Peer> conversationHistory, IConversationRowClickListener iConversationRowClickListener) {
-        this.conversationHistory = conversationHistory;
+    public ConversationHistoryAdapter ( IConversationRowClickListener iConversationRowClickListener) {
+        conversationHistory = new ArrayList<>();
         this.iConversationRowClickListener = iConversationRowClickListener;
     }
 
@@ -26,6 +27,14 @@ public class ConversationHistoryAdapter extends RecyclerView.Adapter<Conversatio
     public ConversationHistoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v  = LayoutInflater.from(parent.getContext()).inflate(R.layout.conversation_row_item, parent, false);
         return new ViewHolder(v);
+    }
+
+    public void setConversationHistory (List<Peer> newData) {
+        if (newData == null)
+            return;
+
+        this.conversationHistory = newData;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -59,5 +68,6 @@ public class ConversationHistoryAdapter extends RecyclerView.Adapter<Conversatio
                 iConversationRowClickListener.onConversationRowClicked(conversationHistory.get(getAdapterPosition()).getId());
             }
         }
+
     }
 }

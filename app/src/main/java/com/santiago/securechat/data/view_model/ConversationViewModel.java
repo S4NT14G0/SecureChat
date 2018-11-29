@@ -12,7 +12,7 @@ import javax.inject.Inject;
 
 public class ConversationViewModel extends ViewModel {
 
-    private LiveData<Message> peerMessages;
+    private LiveData<List<Message>> peerMessages;
 
     private final ConversationRepository conversationRepository;
 
@@ -22,8 +22,12 @@ public class ConversationViewModel extends ViewModel {
     }
 
     public LiveData<List<Message>> getPeerMessages (final int peerId) {
-        // TODO: peerMessages = conversationRepository.getPeerMessages(peerId);
-        return null;
+        peerMessages = conversationRepository.getPeerMessages(peerId);
+        return peerMessages;
+    }
+
+    public long createNewPeer (String ipAddress, int port) {
+        return conversationRepository.requestChat(ipAddress, port);
     }
 
 

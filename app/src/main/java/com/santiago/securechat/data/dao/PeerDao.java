@@ -14,7 +14,7 @@ import java.util.List;
 public interface PeerDao {
 
     @Insert
-    void insert(Peer peer);
+    long insert(Peer peer);
 
     @Update
     void update(Peer ... peers);

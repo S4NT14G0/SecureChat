@@ -28,6 +28,9 @@ import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
 
+import static com.santiago.securechat.data.entity.Peer.NEW_PEER_ARGUMENT_VALUE;
+import static com.santiago.securechat.data.entity.Peer.PEER_ID_ARGUMENTS_KEY;
+
 /**
  * A placeholder fragment containing a the conversation history
  */
@@ -73,20 +76,14 @@ public class ConversationHistoryFragment extends Fragment implements IFabClickLi
 
     private void initConversationHistoryViewModel() {
         conversationHistoryViewModel =  ViewModelProviders.of(this,conversationHistoryViewModelFactory).get(ConversationHistoryViewModel.class);
-        //conversationHistoryViewModel.getPeers().observe(this, peers -> {});
+        conversationHistoryViewModel.getPeers().observe(this, peers -> conversationHistoryAdapter.setConversationHistory(peers));
     }
 
     /**
      * Initialize the conversation history recycler view and set its' data adapter.
      */
     private void initConversationHistoryRecycler (View view) {
-        // TODO: REMOVE ONCE DATA IS LIVE
-        ArrayList<Peer> fauxConversations = new ArrayList<>();
-        fauxConversations.add(new Peer("192.168.10.235", 5050));
-        fauxConversations.add(new Peer("192.168.10.11", 2222));
-
-
-        conversationHistoryAdapter = new ConversationHistoryAdapter(fauxConversations, this);
+        conversationHistoryAdapter = new ConversationHistoryAdapter(this);
         conversationHistoryRecyclerView = view.findViewById(R.id.conversation_list_recycler_view);
         conversationHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         conversationHistoryRecyclerView.setAdapter(conversationHistoryAdapter);
@@ -95,15 +92,11 @@ public class ConversationHistoryFragment extends Fragment implements IFabClickLi
     /**
      * Event to fire when conversation is clicked
      *
-     * @param conversationId - Id of conversation clicked
+     * @param peerId - Id of conversation clicked
      */
     @Override
-    public void onConversationRowClicked(int conversationId) {
-        ConversationFragment conversationFragment = new ConversationFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, conversationFragment, "conversation");
-        transaction.addToBackStack("");
-        transaction.commit();
+    public void onConversationRowClicked(int peerId) {
+        openConversation(peerId);
     }
 
     /**
@@ -111,6 +104,17 @@ public class ConversationHistoryFragment extends Fragment implements IFabClickLi
      */
     @Override
     public void onFabClick() {
-        Toast.makeText(getActivity(), "New Conversation", Toast.LENGTH_LONG).show();
+        openConversation(NEW_PEER_ARGUMENT_VALUE);
+    }
+
+    void openConversation (int peerId) {
+        ConversationFragment conversationFragment = new ConversationFragment();
+        Bundle args = new Bundle();
+        args.putInt(PEER_ID_ARGUMENTS_KEY, peerId);
+        conversationFragment.setArguments(args);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, conversationFragment, "conversation");
+        transaction.addToBackStack("");
+        transaction.commit();
     }
 }
