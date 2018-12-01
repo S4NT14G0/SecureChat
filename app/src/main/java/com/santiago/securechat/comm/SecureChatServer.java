@@ -10,17 +10,15 @@ import javax.inject.Inject;
 public class SecureChatServer {
 
     private final Executor executor;
-    private final SecureChatApplication secureChatApplication;
     private IMessageReceveivedListener iMessageReceveivedListener;
 
     @Inject
-    public SecureChatServer (Executor executor, SecureChatApplication secureChatApplication) {
+    public SecureChatServer (Executor executor) {
         this.executor = executor;
-        this.secureChatApplication = secureChatApplication;
-
     }
 
     public void setMessageReceveivedListener (IMessageReceveivedListener iMessageReceveivedListener) {
         this.iMessageReceveivedListener = iMessageReceveivedListener;
     }
+
 }

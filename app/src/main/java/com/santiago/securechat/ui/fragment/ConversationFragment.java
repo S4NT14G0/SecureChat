@@ -48,6 +48,8 @@ public class ConversationFragment extends Fragment {
 
     TextView tvPeerName;
 
+    String peerIp;
+    int peerPort;
 
 
     @Nullable
@@ -96,9 +98,15 @@ public class ConversationFragment extends Fragment {
         viewMessageSendingWidgetGroup = view.findViewById(R.id.view_message_send);
         etMessage = view.findViewById(R.id.et_message);
         btnSend = view.findViewById(R.id.btn_send);
+        btnSend.setOnClickListener(button -> onSendButtonClicked());
 
         tvPeerName = view.findViewById(R.id.tv_peer_name);
 
+    }
+
+    private void onSendButtonClicked () {
+        if (!etMessage.getText().toString().isEmpty()) {
+        }
     }
 
     @Override
@@ -126,9 +134,8 @@ public class ConversationFragment extends Fragment {
 
         btnStartConversation.setOnClickListener(view -> {
 
-            String peerIp = etNewPeerIp.getText().toString();
-
-            int peerPort = Integer.valueOf(etNewPeerPort.getText().toString());
+            peerIp = etNewPeerIp.getText().toString();
+            peerPort = Integer.valueOf(etNewPeerPort.getText().toString());
 
             long peerId = conversationViewModel.createNewPeer(peerIp, peerPort);
 

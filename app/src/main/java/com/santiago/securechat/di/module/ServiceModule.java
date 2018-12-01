@@ -1,7 +1,11 @@
 package com.santiago.securechat.di.module;
 
+import android.app.Application;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.santiago.securechat.SecureChatApplication;
+import com.santiago.securechat.comm.SecureChatClient;
 import com.santiago.securechat.comm.SecureChatServer;
 
 import java.util.concurrent.Executor;
@@ -27,4 +31,7 @@ public class ServiceModule {
     @Singleton
     SecureChatServer provideSecureChatServer (Executor executor) {return new SecureChatServer(executor);}
 
+    @Provides
+    @Singleton
+    SecureChatClient provideSecureChatClient (Executor executor, Application application) {return new SecureChatClient(executor, application);}
 }

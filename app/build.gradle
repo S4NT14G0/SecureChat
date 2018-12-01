@@ -52,7 +52,4 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.17'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.17'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
-    // Java-WebSocket
-    implementation "org.java-websocket:Java-WebSocket:1.3.9"
-
 }

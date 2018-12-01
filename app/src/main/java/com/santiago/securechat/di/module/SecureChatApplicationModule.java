@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.santiago.securechat.SecureChatApplication;
+import com.santiago.securechat.comm.SecureChatClient;
 import com.santiago.securechat.comm.SecureChatServer;
 import com.santiago.securechat.data.Database;
 import com.santiago.securechat.data.dao.MessageDao;
@@ -46,7 +47,7 @@ public class SecureChatApplicationModule {
 
     @Provides
     @Singleton
-    ConversationRepository provideConversationRepository (PeerDao peerDao, MessageDao messageDao, SecureChatServer secureChatServer, Executor executor) {
-        return new ConversationRepository(peerDao, messageDao, secureChatServer, executor);
+    ConversationRepository provideConversationRepository (PeerDao peerDao, MessageDao messageDao, SecureChatServer secureChatServer, SecureChatClient secureChatClient, Executor executor) {
+        return new ConversationRepository(peerDao, messageDao, secureChatServer, secureChatClient, executor);
     }
 }
