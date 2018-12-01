@@ -23,6 +23,8 @@ public class Message {
     @ColumnInfo(name = "peerId")
     private int peerId;
     private String body;
+    private boolean sendSuccessful;
+    private boolean isOutgoingMessage;
 
     // Getters
     @NonNull
@@ -35,7 +37,12 @@ public class Message {
     public String getBody() {
         return body;
     }
-
+    public boolean isSendSuccessful() {
+        return sendSuccessful;
+    }
+    public boolean isOutgoingMessage() {
+        return isOutgoingMessage;
+    }
     // Setters
 
     public void setMessageId(@NonNull int messageId) {
@@ -47,4 +54,6 @@ public class Message {
     public void setBody(String body) {
         this.body = body;
     }
+    public void setSendSuccessful (Boolean sendSuccessful) {this.sendSuccessful = sendSuccessful;}
+    public void setOutgoingMessage (Boolean isOutgoingMessage) {this.isOutgoingMessage = isOutgoingMessage;}
 }

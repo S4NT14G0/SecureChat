@@ -36,7 +36,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         holder.tvMessage.setText(message);
 
         //TODO: Replace with real logic
-        if (messageList.get(position).getPeerId() == 0) {
+        if (messageList.get(position).isOutgoingMessage()) {
             holder.viewMessage.setGravity(START);
         } else {
             holder.viewMessage.setGravity(END);

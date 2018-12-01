@@ -31,8 +31,6 @@ import static com.santiago.securechat.data.entity.Peer.PEER_ID_ARGUMENTS_KEY;
 
 public class ConversationFragment extends Fragment {
 
-    Peer peer;
-
     @Inject
     public ViewModelProvider.Factory conversationViewModelFactory;
 
@@ -45,12 +43,9 @@ public class ConversationFragment extends Fragment {
     View viewNewConversationWidgetGroup, viewMessageSendingWidgetGroup;
     EditText etNewPeerIp, etNewPeerPort, etMessage;
     Button btnSend, btnStartConversation;
-
     TextView tvPeerName;
 
-    String peerIp;
-    int peerPort;
-
+    Peer peer;
 
     @Nullable
     @Override
@@ -81,10 +76,13 @@ public class ConversationFragment extends Fragment {
         } else {
             // Hide new conversation widgets
             viewNewConversationWidgetGroup.setVisibility(View.GONE);
+            // Find peer
+            peer = conversationViewModel.findPeer(peerId);
+            // Set convo label
+            tvPeerName.setText(peer.getIpAddress() + ":" + peer.getPort());
             // Init observing conversation
-            observerPeerMessages(peerId);
+            observerPeerMessages(peer.getId());
         }
-
 
         return view;
     }
@@ -106,6 +104,13 @@ public class ConversationFragment extends Fragment {
 
     private void onSendButtonClicked () {
         if (!etMessage.getText().toString().isEmpty()) {
+
+            String message = etMessage.getText().toString();
+
+            if (!message.isEmpty())
+                conversationViewModel.sendPeerMessage(peer, message);
+
+            etMessage.setText("");
         }
     }
 
@@ -134,10 +139,10 @@ public class ConversationFragment extends Fragment {
 
         btnStartConversation.setOnClickListener(view -> {
 
-            peerIp = etNewPeerIp.getText().toString();
-            peerPort = Integer.valueOf(etNewPeerPort.getText().toString());
+            String peerIp = etNewPeerIp.getText().toString();
+            int peerPort = Integer.valueOf(etNewPeerPort.getText().toString());
 
-            long peerId = conversationViewModel.createNewPeer(peerIp, peerPort);
+            peer = conversationViewModel.createNewPeer(peerIp, peerPort);
 
             // Show the messaging widgets
             tvPeerName.setVisibility(View.VISIBLE);
@@ -145,7 +150,7 @@ public class ConversationFragment extends Fragment {
             viewMessageSendingWidgetGroup.setVisibility(View.VISIBLE);
 
             tvPeerName.setText(peerIp + ":" + peerPort);
-            observerPeerMessages((int) peerId);
+            observerPeerMessages(peer.getId());
         });
     }
 

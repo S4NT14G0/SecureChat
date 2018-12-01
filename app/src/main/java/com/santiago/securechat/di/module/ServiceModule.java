@@ -29,7 +29,7 @@ public class ServiceModule {
 
     @Provides
     @Singleton
-    SecureChatServer provideSecureChatServer (Executor executor) {return new SecureChatServer(executor);}
+    SecureChatServer provideSecureChatServer (Executor executor, Application application) {return new SecureChatServer(executor, application);}
 
     @Provides
     @Singleton

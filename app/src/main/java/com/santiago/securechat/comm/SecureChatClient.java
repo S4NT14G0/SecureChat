@@ -2,11 +2,9 @@ package com.santiago.securechat.comm;
 
 import android.app.Application;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import com.santiago.securechat.comm.listener.IMessageSentListener;
+import com.santiago.securechat.data.entity.Peer;
+
 import java.io.OutputStream;
 import java.security.KeyStore;
 import java.util.concurrent.Executor;
@@ -33,7 +31,7 @@ public class SecureChatClient {
         this.application = application;
     }
 
-    public void sendMessage (String jsonMessage, String ipAddress, int port) {
+    public void sendMessage (String message, String ipAddress, int port, IMessageSentListener iMessageSentListener) {
         executor.execute(() -> {
             try {
                 KeyStore keyStore = KeyStore.getInstance("BKS");
@@ -46,17 +44,26 @@ public class SecureChatClient {
 
                 OutputStream out = sslSocket.getOutputStream();
 
-                out.write(jsonMessage.getBytes());
+                out.write(message.getBytes());
                 out.flush();
 
                 sslSocket.close();
 
             } catch (Exception e) {
                 e.printStackTrace();
+
+                if (iMessageSentListener != null)
+                    iMessageSentListener.onMessageSent(ipAddress, port, message, false);
+
+                return;
             }
+
+            if (iMessageSentListener != null)
+                iMessageSentListener.onMessageSent(ipAddress, port, message, true);
 
         });
     }
+
 }
 
 

@@ -25,4 +25,7 @@ public interface PeerDao {
     @Query("SELECT * FROM peer WHERE peer.ipAddress == :peerIpAddress AND peer.port == :peerPort")
     Peer findPeerByNetworkId (String peerIpAddress, int peerPort);
 
+    @Query("SELECT * FROM peer where peer.id == :peerId")
+    Peer findPeerById (int peerId);
+
 }

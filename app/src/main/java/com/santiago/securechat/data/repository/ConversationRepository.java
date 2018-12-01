@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 
 import com.santiago.securechat.comm.SecureChatClient;
 import com.santiago.securechat.comm.SecureChatServer;
+import com.santiago.securechat.comm.listener.IMessageSentListener;
 import com.santiago.securechat.data.dao.MessageDao;
 import com.santiago.securechat.data.dao.PeerDao;
 import com.santiago.securechat.data.entity.Message;
@@ -14,13 +15,14 @@ import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
-public class ConversationRepository {
+public class ConversationRepository implements IMessageSentListener {
 
     private final PeerDao peerDao;
     private final MessageDao messageDao;
     private final Executor executor;
     private final SecureChatServer secureChatServer;
     private final SecureChatClient secureChatClient;
+
 
     @Inject
     public ConversationRepository (PeerDao peerDao, MessageDao messageDao, SecureChatServer secureChatServer, SecureChatClient secureChatClient, Executor executor) {
@@ -35,13 +37,18 @@ public class ConversationRepository {
         return peerDao.getPeers();
     }
 
-    public long requestChat (String ipAddress, int port) {
+    public Peer requestChat (String ipAddress, int port) {
         Peer peer = new Peer(ipAddress, port);
-        long peerId = peerDao.insert(peer);
+        int peerId = (int) peerDao.insert(peer);
 
-        secureChatClient.sendMessage("{WAZZZUP}", ipAddress, port);
+        // TODO: Send a well formed hello message
+        secureChatClient.sendMessage("HI", ipAddress, port, null);
 
-        return peerId;
+        return peerDao.findPeerById(peerId);
+    }
+
+    public void sendMessage (Peer peer, String message) {
+        secureChatClient.sendMessage(message, peer.getIpAddress(), peer.getPort(), this);
     }
 
     public LiveData<List<Message>> getPeerMessages (int peerId) {
@@ -49,4 +56,23 @@ public class ConversationRepository {
     }
 
 
+    public Peer findPeerById(int peerId) {
+        return peerDao.findPeerById(peerId);
+    }
+
+    @Override
+    public void onMessageSent(String peerIp, int peerPort, String message, boolean messageSentWithoutException) {
+
+        executor.execute(() -> {
+            Peer peer = peerDao.findPeerByNetworkId(peerIp, peerPort);
+
+            Message messageItem = new Message();
+            messageItem.setPeerId(peer.getId());
+            messageItem.setBody(message);
+            messageItem.setSendSuccessful(messageSentWithoutException);
+
+            messageDao.insert(messageItem);
+
+        });
+    }
 }
