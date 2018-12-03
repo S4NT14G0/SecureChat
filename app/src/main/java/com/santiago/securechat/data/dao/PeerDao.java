@@ -22,8 +22,8 @@ public interface PeerDao {
     @Query("SELECT * FROM peer")
     LiveData<List<Peer>> getPeers ();
 
-    @Query("SELECT * FROM peer WHERE peer.ipAddress == :peerIpAddress AND peer.port == :peerPort")
-    Peer findPeerByNetworkId (String peerIpAddress, int peerPort);
+    @Query("SELECT * FROM peer WHERE peer.ipAddress == :peerIpAddress")
+    Peer findPeerByNetworkId (String peerIpAddress);
 
     @Query("SELECT * FROM peer where peer.id == :peerId")
     Peer findPeerById (int peerId);

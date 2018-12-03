@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 
 import com.santiago.securechat.comm.SecureChatClient;
 import com.santiago.securechat.comm.SecureChatServer;
+import com.santiago.securechat.comm.listener.IMessageReceveivedListener;
 import com.santiago.securechat.comm.listener.IMessageSentListener;
 import com.santiago.securechat.data.dao.MessageDao;
 import com.santiago.securechat.data.dao.PeerDao;
@@ -15,7 +16,7 @@ import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
-public class ConversationRepository implements IMessageSentListener {
+public class ConversationRepository implements IMessageSentListener, IMessageReceveivedListener {
 
     private final PeerDao peerDao;
     private final MessageDao messageDao;
@@ -31,6 +32,9 @@ public class ConversationRepository implements IMessageSentListener {
         this.secureChatServer = secureChatServer;
         this.secureChatClient = secureChatClient;
         this.executor = executor;
+
+        secureChatServer.setMessageReceveivedListener(this);
+        secureChatServer.run();
     }
 
     public LiveData<List<Peer>> getPeers () {
@@ -38,11 +42,9 @@ public class ConversationRepository implements IMessageSentListener {
     }
 
     public Peer requestChat (String ipAddress, int port) {
-        Peer peer = new Peer(ipAddress, port);
-        int peerId = (int) peerDao.insert(peer);
+        int peerId = createPeer(ipAddress, port);
 
-        // TODO: Send a well formed hello message
-        secureChatClient.sendMessage("HI", ipAddress, port, null);
+        secureChatClient.sendMessage("Howdy", ipAddress, port, null);
 
         return peerDao.findPeerById(peerId);
     }
@@ -64,7 +66,7 @@ public class ConversationRepository implements IMessageSentListener {
     public void onMessageSent(String peerIp, int peerPort, String message, boolean messageSentWithoutException) {
 
         executor.execute(() -> {
-            Peer peer = peerDao.findPeerByNetworkId(peerIp, peerPort);
+            Peer peer = peerDao.findPeerByNetworkId(peerIp);
 
             Message messageItem = new Message();
             messageItem.setPeerId(peer.getId());
@@ -74,5 +76,37 @@ public class ConversationRepository implements IMessageSentListener {
             messageDao.insert(messageItem);
 
         });
+    }
+
+    @Override
+    public void onIncomingMessage(String senderIpAddress, String message) {
+
+        executor.execute(() -> {
+
+            Peer peer = peerDao.findPeerByNetworkId(senderIpAddress);
+
+            if (peer != null) {
+                if (peer.isBlackListed())
+                    return;
+
+                Message messageItem = new Message();
+                messageItem.setPeerId(peer.getId());
+                messageItem.setBody(message);
+                messageItem.setOutgoingMessage(false);
+                messageDao.insert(messageItem);
+            } else {
+               // TODO: Handle new conversation requests
+                int peerId = createPeer(senderIpAddress, 9999);
+                Message messageItem = new Message();
+                messageItem.setPeerId(peerId);
+                messageItem.setBody(message);
+                messageItem.setOutgoingMessage(false);
+            }
+        });
+    }
+
+    int  createPeer (String ipAddress, int port) {
+        Peer peer = new Peer(ipAddress, port);
+        return (int) peerDao.insert(peer);
     }
 }
