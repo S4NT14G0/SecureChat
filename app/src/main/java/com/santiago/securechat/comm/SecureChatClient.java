@@ -1,9 +1,16 @@
+/*
+  Santiago Roig
+  Faten Haji
+  Thien Nguyen
+
+  SecureCh@t
+ */
+
 package com.santiago.securechat.comm;
 
 import android.app.Application;
 
 import com.santiago.securechat.comm.listener.IMessageSentListener;
-import com.santiago.securechat.data.entity.Peer;
 
 import java.io.OutputStream;
 import java.security.KeyStore;
@@ -16,14 +23,16 @@ import java.net.Socket;
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocket;
 
+/**
+ * Responsible for sending SSL messages to server
+ */
 public class SecureChatClient {
-
 
     private final Executor executor;
     private final Application application;
 
     /**
-     * Initializes connection to secure websocket server as client
+     * Initializes connection to secure server as client
      */
     @Inject
     public SecureChatClient (Executor executor, Application application) {
@@ -31,6 +40,13 @@ public class SecureChatClient {
         this.application = application;
     }
 
+    /**
+     * Sends message over SSL and closes socket
+     * @param message - Message
+     * @param ipAddress - Outgoing IP Address
+     * @param port - Outgoing Port
+     * @param iMessageSentListener - Listens for message send success
+     */
     public void sendMessage (String message, String ipAddress, int port, IMessageSentListener iMessageSentListener) {
         executor.execute(() -> {
             try {

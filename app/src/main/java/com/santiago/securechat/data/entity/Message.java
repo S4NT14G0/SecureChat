@@ -43,8 +43,8 @@ public class Message {
     public boolean isOutgoingMessage() {
         return isOutgoingMessage;
     }
-    // Setters
 
+    // Setters
     public void setMessageId(@NonNull int messageId) {
         this.messageId = messageId;
     }
@@ -54,6 +54,6 @@ public class Message {
     public void setBody(String body) {
         this.body = body;
     }
-    public void setSendSuccessful (Boolean sendSuccessful) {this.sendSuccessful = sendSuccessful;}
-    public void setOutgoingMessage (Boolean isOutgoingMessage) {this.isOutgoingMessage = isOutgoingMessage;}
+    public void setSendSuccessful (boolean sendSuccessful) {this.sendSuccessful = sendSuccessful;}
+    public void setOutgoingMessage (boolean isOutgoingMessage) {this.isOutgoingMessage = isOutgoingMessage;}
 }

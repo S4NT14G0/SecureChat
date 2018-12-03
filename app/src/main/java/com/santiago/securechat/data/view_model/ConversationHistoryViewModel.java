@@ -3,6 +3,7 @@ package com.santiago.securechat.data.view_model;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.santiago.securechat.data.INewPeerRequestListener;
 import com.santiago.securechat.data.entity.Peer;
 import com.santiago.securechat.data.repository.ConversationRepository;
 
@@ -25,5 +26,17 @@ public class ConversationHistoryViewModel extends ViewModel {
 
     public LiveData<List<Peer>> getPeers() {
         return peers;
+    }
+
+    public void registerNewPeerRequestListener(INewPeerRequestListener iNewPeerRequestListener) {
+        conversationRepository.registerNewPeerRequestListener(iNewPeerRequestListener);
+    }
+
+    public void unregisterNewPeerRequestListener () {
+        conversationRepository.unregisterNewPeerRequestListener();
+    }
+
+    public void setPeerBlackListed (Peer peer, boolean isBlackListed) {
+        conversationRepository.setPeerBlackListed(peer, isBlackListed);
     }
 }

@@ -1,9 +1,17 @@
+/*
+  Santiago Roig
+  Faten Haji
+  Thien Nguyen
+
+  SecureCh@t
+ */
+
 package com.santiago.securechat.comm;
 
 import android.app.Application;
 import android.util.Log;
 
-import com.santiago.securechat.comm.listener.IMessageReceveivedListener;
+import com.santiago.securechat.comm.listener.IMessageReceivedListener;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -20,25 +28,41 @@ import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 
+/**
+ * Responsible for receiving SSL messages from clients
+ */
+@SuppressWarnings("unused")
 public class SecureChatServer {
 
     private final Executor executor;
     private final Application application;
 
-    private IMessageReceveivedListener iMessageReceveivedListener;
+    private IMessageReceivedListener iMessageReceivedListener;
 
     private boolean isRunning = false;
 
+    /**
+     * Constructs SecureChatServer
+     * @param executor - Used for thread management
+     * @param application - Used for application context
+     */
     @Inject
     public SecureChatServer (Executor executor, Application application) {
         this.executor = executor;
         this.application = application;
     }
 
-    public void setMessageReceveivedListener (IMessageReceveivedListener iMessageReceveivedListener) {
-        this.iMessageReceveivedListener = iMessageReceveivedListener;
+    /**
+     * Set's listener for incoming messages
+     * @param iMessageReceivedListener -
+     */
+    public void setMessageReceivedListener(IMessageReceivedListener iMessageReceivedListener) {
+        this.iMessageReceivedListener = iMessageReceivedListener;
     }
 
+    /**
+     * Listens for incoming client connections and spawns new thread to handle client's message
+     */
     public void run () {
 
         executor.execute(() -> {
@@ -66,6 +90,10 @@ public class SecureChatServer {
         });
     }
 
+    /**
+     * Thread for handling incoming message form peer
+     * @param sslSocket - SSLSocket connected to client
+     */
     private void clientHandleThread (SSLSocket sslSocket) {
         sslSocket.setEnabledCipherSuites(sslSocket.getSupportedCipherSuites());
 
@@ -87,12 +115,12 @@ public class SecureChatServer {
 
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-            String message = null;
+            String message;
             while((message = bufferedReader.readLine()) != null){
 
                 Log.d(getClass().getSimpleName(), "Input: " + message);
 
-                iMessageReceveivedListener.onIncomingMessage(sslSession.getPeerHost(), message);
+                iMessageReceivedListener.onIncomingMessage(sslSession.getPeerHost(), message);
 
                 if(message.trim().isEmpty()){
                     break;
@@ -101,11 +129,15 @@ public class SecureChatServer {
 
             sslSocket.close();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
     }
 
+    /**
+     * Create's SSL context from key located in assets
+     * @return SSLContext
+     */
     private SSLContext createSSLContext () {
 
         SSLContext sslContext = null;
@@ -130,10 +162,18 @@ public class SecureChatServer {
         return sslContext;
     }
 
+    /**
+     * Check if server is running
+     * @return Server Running Status
+     */
+    @SuppressWarnings("unused")
     public boolean isRunning() {
         return isRunning;
     }
 
+    /**
+     * Stop the server
+     */
     public void stop () {
         isRunning = false;
     }

@@ -4,8 +4,9 @@ import android.arch.lifecycle.LiveData;
 
 import com.santiago.securechat.comm.SecureChatClient;
 import com.santiago.securechat.comm.SecureChatServer;
-import com.santiago.securechat.comm.listener.IMessageReceveivedListener;
+import com.santiago.securechat.comm.listener.IMessageReceivedListener;
 import com.santiago.securechat.comm.listener.IMessageSentListener;
+import com.santiago.securechat.data.INewPeerRequestListener;
 import com.santiago.securechat.data.dao.MessageDao;
 import com.santiago.securechat.data.dao.PeerDao;
 import com.santiago.securechat.data.entity.Message;
@@ -16,24 +17,24 @@ import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
-public class ConversationRepository implements IMessageSentListener, IMessageReceveivedListener {
+public class ConversationRepository implements IMessageSentListener, IMessageReceivedListener {
 
     private final PeerDao peerDao;
     private final MessageDao messageDao;
     private final Executor executor;
-    private final SecureChatServer secureChatServer;
     private final SecureChatClient secureChatClient;
+
+    private INewPeerRequestListener iNewPeerRequestListener;
 
 
     @Inject
     public ConversationRepository (PeerDao peerDao, MessageDao messageDao, SecureChatServer secureChatServer, SecureChatClient secureChatClient, Executor executor) {
         this.peerDao = peerDao;
         this.messageDao = messageDao;
-        this.secureChatServer = secureChatServer;
         this.secureChatClient = secureChatClient;
         this.executor = executor;
 
-        secureChatServer.setMessageReceveivedListener(this);
+        secureChatServer.setMessageReceivedListener(this);
         secureChatServer.run();
     }
 
@@ -95,7 +96,6 @@ public class ConversationRepository implements IMessageSentListener, IMessageRec
                 messageItem.setOutgoingMessage(false);
                 messageDao.insert(messageItem);
             } else {
-               // TODO: Handle new conversation requests
                 int peerId = createPeer(senderIpAddress, 9999);
                 Message messageItem = new Message();
                 messageItem.setPeerId(peerId);
@@ -107,6 +107,21 @@ public class ConversationRepository implements IMessageSentListener, IMessageRec
 
     int  createPeer (String ipAddress, int port) {
         Peer peer = new Peer(ipAddress, port);
+        if (iNewPeerRequestListener != null)
+            iNewPeerRequestListener.onNewPeerRequest(peer);
         return (int) peerDao.insert(peer);
+    }
+
+    public void unregisterNewPeerRequestListener () {
+        this.iNewPeerRequestListener = null;
+    }
+
+    public void registerNewPeerRequestListener(INewPeerRequestListener iNewPeerRequestListener) {
+        this.iNewPeerRequestListener = iNewPeerRequestListener;
+    }
+
+    public void setPeerBlackListed (Peer peer, boolean isBlackListed) {
+        peer.setBlackListed(isBlackListed);
+        peerDao.update(peer);
     }
 }
