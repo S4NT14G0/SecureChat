@@ -8,7 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="gone"
         android:id="@+id/view_new_covnersation">
 
         <TextView
@@ -19,9 +18,7 @@
         <EditText
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:id="@+id/et_new_peer_ip"
-            android:inputType="number"
-            android:digits="0123456789."/>
+            android:id="@+id/et_new_peer_ip" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -67,7 +64,7 @@
         android:id="@+id/view_message_send">
 
         <EditText
-            android:layout_width="350dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:id="@+id/et_message"/>
 

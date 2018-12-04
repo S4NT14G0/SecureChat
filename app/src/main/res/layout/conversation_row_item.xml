@@ -18,7 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:text="Good to see you peer number 32!"
         android:textColor="@color/colorPrimary"/>
 
     <View

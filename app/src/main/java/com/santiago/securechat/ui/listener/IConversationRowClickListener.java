@@ -7,7 +7,7 @@ public interface IConversationRowClickListener {
 
     /**
      * Event to fire when conversation is clicked
-     * @param conversationId - Id of conversation clicked
+     * @param peerId - Id of peer who's conversation was clicked
      */
-    void onConversationRowClicked (int conversationId);
+    void onConversationRowClicked (int peerId);
 }

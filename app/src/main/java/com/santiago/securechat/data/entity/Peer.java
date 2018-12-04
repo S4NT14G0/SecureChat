@@ -10,6 +10,8 @@ import com.google.gson.annotations.SerializedName;
 
 @Entity(indices = {@Index("id")})
 public class Peer {
+    public static final String PEER_ID_ARGUMENTS_KEY = "peerId";
+    public static final int NEW_PEER_ARGUMENT_VALUE = -1;
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
