@@ -110,11 +110,12 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
         String newPeerDialogMessage = "Message from " + peer.getIpAddress() + ":" + peer.getPort();
 
         builder.setMessage(newPeerDialogMessage)
                 .setPositiveButton("Accept", dialogClickListener)
-                .setNegativeButton("Black List Peer", dialogClickListener).show();
+                .setNegativeButton("Black List Peer", dialogClickListener);
+
+        MainActivity.this.runOnUiThread(() -> builder.show());
     }
 }

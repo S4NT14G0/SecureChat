@@ -72,6 +72,7 @@ public class ConversationRepository implements IMessageSentListener, IMessageRec
             Message messageItem = new Message();
             messageItem.setPeerId(peer.getId());
             messageItem.setBody(message);
+            messageItem.setOutgoingMessage(true);
             messageItem.setSendSuccessful(messageSentWithoutException);
 
             messageDao.insert(messageItem);
@@ -97,18 +98,19 @@ public class ConversationRepository implements IMessageSentListener, IMessageRec
                 messageDao.insert(messageItem);
             } else {
                 int peerId = createPeer(senderIpAddress, 9999);
+
                 Message messageItem = new Message();
                 messageItem.setPeerId(peerId);
                 messageItem.setBody(message);
                 messageItem.setOutgoingMessage(false);
+                if (iNewPeerRequestListener != null)
+                    iNewPeerRequestListener.onNewPeerRequest(peerDao.findPeerById(peerId));
             }
         });
     }
 
     int  createPeer (String ipAddress, int port) {
         Peer peer = new Peer(ipAddress, port);
-        if (iNewPeerRequestListener != null)
-            iNewPeerRequestListener.onNewPeerRequest(peer);
         return (int) peerDao.insert(peer);
     }
 
