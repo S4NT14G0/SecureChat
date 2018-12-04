@@ -22,7 +22,7 @@ public class Message {
     private int messageId;
     @ColumnInfo(name = "peerId")
     private int peerId;
-    private String body;
+    private SecureMessage secureMessage;
     private boolean sendSuccessful;
     private boolean isOutgoingMessage;
 
@@ -34,14 +34,14 @@ public class Message {
     public int getPeerId() {
         return peerId;
     }
-    public String getBody() {
-        return body;
-    }
     public boolean isSendSuccessful() {
         return sendSuccessful;
     }
     public boolean isOutgoingMessage() {
         return isOutgoingMessage;
+    }
+    public SecureMessage getSecureMessage() {
+        return secureMessage;
     }
 
     // Setters
@@ -51,9 +51,9 @@ public class Message {
     public void setPeerId(int peerId) {
         this.peerId = peerId;
     }
-    public void setBody(String body) {
-        this.body = body;
-    }
     public void setSendSuccessful (boolean sendSuccessful) {this.sendSuccessful = sendSuccessful;}
     public void setOutgoingMessage (boolean isOutgoingMessage) {this.isOutgoingMessage = isOutgoingMessage;}
+    public void setSecureMessage(SecureMessage secureMessage) {
+        this.secureMessage = secureMessage;
+    }
 }

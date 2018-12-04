@@ -11,6 +11,7 @@ import com.santiago.securechat.data.dao.MessageDao;
 import com.santiago.securechat.data.dao.PeerDao;
 import com.santiago.securechat.data.entity.Message;
 import com.santiago.securechat.data.entity.Peer;
+import com.santiago.securechat.data.entity.SecureMessage;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -71,7 +72,7 @@ public class ConversationRepository implements IMessageSentListener, IMessageRec
 
             Message messageItem = new Message();
             messageItem.setPeerId(peer.getId());
-            messageItem.setBody(message);
+            messageItem.setSecureMessage(new SecureMessage(message));
             messageItem.setOutgoingMessage(true);
             messageItem.setSendSuccessful(messageSentWithoutException);
 
@@ -93,7 +94,7 @@ public class ConversationRepository implements IMessageSentListener, IMessageRec
 
                 Message messageItem = new Message();
                 messageItem.setPeerId(peer.getId());
-                messageItem.setBody(message);
+                messageItem.setSecureMessage(new SecureMessage(message));
                 messageItem.setOutgoingMessage(false);
                 messageDao.insert(messageItem);
             } else {
@@ -101,7 +102,7 @@ public class ConversationRepository implements IMessageSentListener, IMessageRec
 
                 Message messageItem = new Message();
                 messageItem.setPeerId(peerId);
-                messageItem.setBody(message);
+                messageItem.setSecureMessage(new SecureMessage(message));
                 messageItem.setOutgoingMessage(false);
                 if (iNewPeerRequestListener != null)
                     iNewPeerRequestListener.onNewPeerRequest(peerDao.findPeerById(peerId));

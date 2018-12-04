@@ -1,11 +1,16 @@
 package com.santiago.securechat.ui.adapter;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.santiago.securechat.R;
 import com.santiago.securechat.data.entity.Message;
@@ -32,16 +37,19 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String message = messageList.get(position).getBody();
+        Message messageItem = messageList.get(position);
+        String message = messageItem.getSecureMessage().getMessage();
         holder.tvMessage.setText(message);
 
-        //TODO: Replace with real logic
-        if (messageList.get(position).isOutgoingMessage()) {
+        if (messageItem.isOutgoingMessage()) {
             holder.viewMessage.setGravity(START);
+
+            if (!messageItem.isSendSuccessful()) {
+                holder.cardView.setCardBackgroundColor(Color.RED);
+            }
         } else {
             holder.viewMessage.setGravity(END);
         }
-
     }
 
     public void setMessages (List<Message> newData) {
@@ -63,11 +71,13 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
         final TextView tvMessage;
         final LinearLayout viewMessage;
+        final CardView cardView;
 
         ViewHolder(View itemView) {
             super(itemView);
             tvMessage = itemView.findViewById(R.id.message_text_view);
             viewMessage = itemView.findViewById(R.id.message_view);
+            cardView = itemView.findViewById(R.id.card_view);
         }
     }
 }
