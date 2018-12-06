@@ -1,3 +1,11 @@
+/*
+  Santiago Roig
+  Faten Haji
+  Thien Nguyen
+
+  SecureCh@t
+ */
+
 package com.santiago.securechat.data.entity;
 
 import android.arch.persistence.room.ColumnInfo;
@@ -8,6 +16,9 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * This class is self documenting.  Just a simple entity representing a peer.
+ */
 @Entity(indices = {@Index("id")})
 public class Peer {
     public static final String PEER_ID_ARGUMENTS_KEY = "peerId";

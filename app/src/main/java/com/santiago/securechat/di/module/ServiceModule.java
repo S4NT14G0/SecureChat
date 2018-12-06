@@ -1,3 +1,12 @@
+/*
+  Santiago Roig
+  Faten Haji
+  Thien Nguyen
+
+  SecureCh@t
+ */
+
+
 package com.santiago.securechat.di.module;
 
 import android.app.Application;

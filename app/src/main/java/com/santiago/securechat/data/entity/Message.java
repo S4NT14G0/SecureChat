@@ -1,3 +1,11 @@
+/*
+  Santiago Roig
+  Faten Haji
+  Thien Nguyen
+
+  SecureCh@t
+ */
+
 package com.santiago.securechat.data.entity;
 
 import android.arch.persistence.room.ColumnInfo;
@@ -9,6 +17,9 @@ import android.support.annotation.NonNull;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
+/**
+ * This class is self documenting.  Just a simple entity representing a message.
+ */
 @Entity(indices = {@Index("messageId")},
         foreignKeys = @ForeignKey(entity = Peer.class,
         parentColumns = "id",

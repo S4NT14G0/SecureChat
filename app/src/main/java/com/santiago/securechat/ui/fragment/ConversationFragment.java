@@ -1,3 +1,11 @@
+/*
+  Santiago Roig
+  Faten Haji
+  Thien Nguyen
+
+  SecureCh@t
+ */
+
 package com.santiago.securechat.ui.fragment;
 
 import android.arch.lifecycle.ViewModelProvider;
@@ -142,7 +150,7 @@ public class ConversationFragment extends Fragment {
             String peerIp = etNewPeerIp.getText().toString();
             int peerPort = Integer.valueOf(etNewPeerPort.getText().toString());
 
-            peer = conversationViewModel.createNewPeer(peerIp, peerPort);
+            peer = conversationViewModel.requestChat(peerIp, peerPort);
 
             // Show the messaging widgets
             tvPeerName.setVisibility(View.VISIBLE);

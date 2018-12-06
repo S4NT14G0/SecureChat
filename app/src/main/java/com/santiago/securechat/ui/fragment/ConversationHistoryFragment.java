@@ -1,3 +1,11 @@
+/*
+  Santiago Roig
+  Faten Haji
+  Thien Nguyen
+
+  SecureCh@t
+ */
+
 package com.santiago.securechat.ui.fragment;
 
 import android.arch.lifecycle.ViewModelProvider;

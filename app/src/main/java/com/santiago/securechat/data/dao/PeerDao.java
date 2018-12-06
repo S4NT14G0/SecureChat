@@ -1,3 +1,11 @@
+/*
+  Santiago Roig
+  Faten Haji
+  Thien Nguyen
+
+  SecureCh@t
+ */
+
 package com.santiago.securechat.data.dao;
 
 import android.arch.lifecycle.LiveData;
@@ -10,6 +18,9 @@ import com.santiago.securechat.data.entity.Peer;
 
 import java.util.List;
 
+/**
+ * Peer Data Access Object.  Responsible for Peer table modifications in underlying Room SQL database.
+ */
 @Dao
 public interface PeerDao {
 

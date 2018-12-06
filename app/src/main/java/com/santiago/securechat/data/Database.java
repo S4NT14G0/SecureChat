@@ -1,3 +1,11 @@
+/*
+  Santiago Roig
+  Faten Haji
+  Thien Nguyen
+
+  SecureCh@t
+ */
+
 package com.santiago.securechat.data;
 
 import android.arch.persistence.room.RoomDatabase;
@@ -9,6 +17,10 @@ import com.santiago.securechat.data.entity.Message;
 import com.santiago.securechat.data.entity.Peer;
 import com.santiago.securechat.data.entity.type_converter.SecureMessageTypeConverter;
 
+/**
+ * Database
+ * @see RoomDatabase for more information pertaining to implementation
+ */
 @android.arch.persistence.room.Database(entities = {Message.class, Peer.class}, version = 1, exportSchema = false)
 @TypeConverters({SecureMessageTypeConverter.class})
 public abstract class Database extends RoomDatabase {
