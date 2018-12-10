@@ -1,6 +1,7 @@
 # SecureChat
 
-## SecureCh@t is a peer-to-peer TLSv1 encrypted messaging application developed for secure communication between Android phones.  The application will employ a Model-view-viewmodel (MVVM) pattern for communications between the layers of the application and make use of GRASP principles within its’ design.  SecureCh@t will make use of a direct connection over SSL to request conversations with peers.  Users can chat with peers in real time or look through older messages that have been encrypted and stored in a local database using PBE with MD5 and DES.
+
+ SecureCh@t is a peer-to-peer TLSv1 encrypted messaging application developed for secure communication between Android phones.  The application will employ a Model-view-viewmodel (MVVM) pattern for communications between the layers of the application and make use of GRASP principles within its’ design.  SecureCh@t will make use of a direct connection over SSL to request conversations with peers.  Users can chat with peers in real time or look through older messages that have been encrypted and stored in a local database using PBE with MD5 and DES.
 
 
 ## Instructions
